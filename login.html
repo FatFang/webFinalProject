@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>webHW4</title>
+    <meta charset="UTF-8" />
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script>
+        function USER(){
+            $.ajax({
+                url: "userRecord.php",
+                data: {
+                    
+                },
+                type: "POST",
+                datatype: "html",
+                success: function (output) {
+                    document.getElementById("list").innerHTML = output;
+                },
+                error: function () {
+                    alert("Request failed.");
+                }
+            });
+        }
+        function LogOut(){
+            var choice = 1;
+            $.ajax({
+                url: "check.php",
+                data: {
+                    choice: choice
+                },
+                type: "POST",
+                datatype: "html",
+                success: function (output) {
+                    document.getElementById("list").innerHTML = output;
+                },
+                error: function () {
+                    alert("Request failed.");
+                }
+            });
+        }
+        function Order(temp) {
+            var c = temp.parentElement;
+            var formNum = c.dataset.goods;
+            var name = $("#name").val();
+            var phone = $("#phone").val();
+            var mail = $("#mail").val();
+            if (formNum == 5 || formNum == 6 || formNum == 7 || formNum == 8) {
+                var goodsKind = $("#goodsKind").val();
+            } else if (formNum == 1) {
+                var goodsKind = "雙層牛肉吉事堡";
+            } else if (formNum == 2) {
+                var goodsKind = "大薯";
+            } else if (formNum == 3) {
+                var goodsKind = "大杯美式咖啡";
+            } else if (formNum == 4) {
+                var goodsKind = "拿鐵";
+            }
+
+            var a = temp.parentElement.parentElement.parentElement;
+            var spaceNum = a.dataset.space;//商店編號
+
+            var b = temp;
+            var sendWay = b.dataset.send;
+            debugger;
+            $.ajax({
+                url: "Order.php",
+                data: {
+                    name: name,
+                    phone: phone,
+                    mail: mail,
+                    goodsKind: goodsKind,
+                    spaceNum: spaceNum,
+                    sendWay: sendWay,
+                    formNum: formNum
+                },
+                type: "POST",
+                datatype: "html",
+                success: function (output) {
+                    document.getElementById("list").innerHTML = output;
+                },
+                error: function () {
+                    alert("Request failed.");
+                }
+            });
+        }
+        function PrePage() {
+            var choice = 2;
+            $.ajax({
+                url: "storeData.php",
+                data: {
+                    choice: choice
+                },
+                type: "POST",
+                datatype: "html",
+                success: function (output) {
+                    document.getElementById("list").innerHTML = output;
+                },
+                error: function () {
+                    alert("Request failed.");
+                }
+            });
+        }
+        function formData(temp) {
+            var choice = 3;
+            var a = temp;
+            var formNum = a.dataset.discount;
+            debugger;
+            var b = temp.parentElement;
+            var storeNum = b.dataset.space;
+            $.ajax({
+                url: "storeData.php",
+                data: {
+                    formNum: formNum,
+                    choice: choice,
+                    storeNum: storeNum
+                },
+                type: "POST",
+                datatype: "html",
+                success: function (output) {
+                    document.getElementById("list").innerHTML = output;
+                },
+                error: function () {
+                    alert("Request failed.");
+                }
+            });
+        }
+        function storeData(temp) {
+            var a = temp;
+            var spaceNum = a.dataset.space;
+            var choice = 1;
+            $.ajax({
+                url: "storeData.php",
+                data: {
+                    spaceNum: spaceNum,
+                    choice: choice
+                },
+                type: "POST",
+                datatype: "html",
+                success: function (output) {
+                    document.getElementById("list").innerHTML = output;
+                },
+                error: function () {
+                    alert("Request failed.");
+                }
+            });
+        }
+        function login() {
+            var accountnumber = $("#accountnumber").val();
+            var password = $("#password").val();
+            var choice = 0;
+            $.ajax({
+                url: "check.php",
+                data: {
+                    accountnumber: accountnumber,
+                    password: password,
+                    choice: choice
+                },
+                type: "POST",
+                datatype: "html",
+                success: function (output) {
+                    document.getElementById("list").innerHTML = output;
+                },
+                error: function () {
+                    alert("Request failed.");
+                }
+            });
+        }
+    </script>
+    <style type="text/css">
+        body {
+            font-family: sans-serif;
+            background-color: lightyellow;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #form1 {
+            position: absolute;
+            margin-top: 150px;
+            margin-left: 500px;
+        }
+
+        /*box x 4*/
+        .Box {
+            width: 650.188px;
+            height: 350.078px;
+            float: left;
+            margin: 44.391px;
+            border-radius: 20px;
+            position: absolute;
+        }
+
+        #box1 {
+            background-color: #5ea4b9;
+            top: 20px;
+            left: 10px;
+        }
+
+        #box2 {
+            background-color: #5c84b8;
+            top: 20px;
+            right: 10px;
+        }
+
+        #box3 {
+            background-color: #F0AD4E;
+            bottom: 1px;
+            left: 10px;
+        }
+
+        #box4 {
+            background-color: #FFC706;
+            right: 10px;
+            bottom: 1px;
+        }
+
+        #Logbutton {
+            position: absolute;
+            text-align: center;
+            border-radius: 20px;
+            color: black;
+            right: 55px;
+            top: 10px;
+            width: 160px;
+            height: 40px;
+            line-height: 40px;
+            background-color: rgb(243, 231, 127);
+        }
+
+        #userbutton {
+            position: absolute;
+            text-align: center;
+            border-radius: 20px;
+            right: 250px;
+            top: 10px;
+            width: 160px;
+            height: 40px;
+            line-height: 40px;
+            background-color: rgb(243, 231, 127);
+        }
+
+        .store {
+            width: 80%;
+            height: 700px;
+            float: left;
+            margin-top: 44.391px;
+            margin-bottom: 44.391px;
+            margin-left: 10%;
+            margin-right: 10%;
+            border-radius: 40px;
+            position: absolute;
+        }
+
+        .Box:hover {
+            box-shadow: 5px 5px 10px dimgray;
+        }
+
+        .Box:active {
+
+            box-shadow: 0px 0px 0px dimgray;
+
+        }
+
+        #Logbutton:hover {
+            box-shadow: 5px 5px 10px dimgray;
+        }
+
+        #Logbutton:active {
+
+            box-shadow: 0px 0px 0px dimgray;
+
+        }
+
+        #userbutton:hover {
+            box-shadow: 5px 5px 10px dimgray;
+        }
+
+        #userbutton:active {
+
+            box-shadow: 0px 0px 0px dimgray;
+
+        }
+
+        #buy {
+            position: absolute;
+            background-color: rgb(243, 231, 127);
+            width: 40%;
+            height: 77%;
+            left: 55%;
+            top: 15%;
+            border-radius: 40px;
+        }
+
+        form div {
+            width: 300px;
+            padding: .5px;
+            background: white;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        form div p {
+            color: gray;
+        }
+
+        .orderData {
+            width: 40%;
+            height: 700px;
+            float: left;
+            margin-top: 44.391px;
+            margin-bottom: 44.391px;
+            margin-left: 30%;
+            margin-right: 30%;
+            border-radius: 40px;
+            background-color: rgb(243, 231, 127);
+            position: absolute;
+        }
+
+        .orderDetail{
+            width: 60%;
+            height: 60px;
+            margin-top: 30px;
+            margin-bottom: 35px;
+            margin-left: 20%;
+            margin-right: 20%;
+            border-radius: 40px;
+            background-color: rgb(248, 248, 248);
+            text-align: center;
+            line-height: 60px;
+            color: rgb(77, 77, 77);
+            font-size: 18pt;
+        }
+
+        .storeName {
+            position: relative;
+            background-color: rgb(243, 231, 127);
+            width: 40%;
+            height: 150px;
+            border-radius: 40px;
+            top: 5%;
+            left: 5%;
+            text-align: center;
+            line-height: 150px;
+            font-size: 50pt;
+            margin: 0px;
+        }
+
+        .discount1 {
+            position: relative;
+            background-color: rgb(243, 231, 127);
+            width: 45%;
+            height: 170px;
+            top: 15%;
+            border-radius: 40px;
+            left: 5%;
+            text-align: center;
+            line-height: 170px;
+            font-size: 25pt;
+            margin: 0px;
+        }
+
+        .discount2 {
+            position: relative;
+            background-color: rgb(243, 231, 127);
+            width: 45%;
+            height: 170px;
+            top: 23%;
+            border-radius: 40px;
+            left: 5%;
+            text-align: center;
+            line-height: 170px;
+            font-size: 25pt;
+            margin: 0px;
+        }
+
+        .discount1:hover {
+            box-shadow: 5px 5px 10px dimgray;
+        }
+
+        .discount1:active {
+
+            box-shadow: 0px 0px 0px dimgray;
+
+        }
+
+        .discount2:hover {
+            box-shadow: 5px 5px 10px dimgray;
+        }
+
+        .discount2:active {
+
+            box-shadow: 0px 0px 0px dimgray;
+
+        }
+        .warning{
+            width: 30%;
+            height: 300px;
+            float: left;
+            left: 35%;
+            right: 35%;
+            top: 30%;
+            border-radius: 40px;
+            background-color: rgb(243, 231, 127);
+            position: absolute;
+        }
+        .warnText{
+            position: relative;
+            width: 80%;
+            height: 100px;
+            border-radius: 40px;
+            text-align: center;
+            background-color: white;
+            line-height: 100px;
+            left: 10%;
+            top: 30%;
+            font-size: 20pt;
+        }
+        .userBuy{
+            background-color: rgb(243, 231, 127);
+            width: 80%;
+            border-radius: 10px;
+            text-align: center;
+            left: 10%;
+            top: 10%;
+            position: absolute;
+        }
+        .td1{
+            background-color: rgb(233, 212, 21);
+            border-radius: 80px;
+            position: relative;
+        }
+        .td2{
+            background-color: rgb(253, 246, 178);
+            border-radius: 80px;
+            position: relative;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="list">
+        <form id="form1">
+            accountnumber<br><input type="text" name="accountnumber" id="accountnumber" required><br>
+            password<br><input type="password" name="password" id="password" required><br>
+            <p><input id="submit" type="button" value="login" onclick="login()"></p>
+            <p><a href="createAccount.html"><input id="submit" type="button" value="create account"></a></p>
+        </form>
+    </div>
+</body>
+
+</html>

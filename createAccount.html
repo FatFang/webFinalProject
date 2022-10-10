@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>webHW4</title>
+    <meta charset="UTF-8" />
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script>
+        function create() {
+            var accountnumber = $("#accountnumber").val();
+            var password = $("#password").val();
+            $.ajax({
+                url: "userData.php",
+                data: {
+                    accountnumber: accountnumber,
+                    password: password
+                },
+                type: "POST",
+                datatype: "html",
+                success: function (output) {
+                    document.getElementById( "create" ).innerHTML = output;
+                },
+                error: function () {
+                    alert("Request failed.");
+                }
+            });
+        }
+    </script>
+    <style type="text/css">
+        body {
+            font-family: sans-serif;
+            background-color: lightyellow;
+            position: relative;
+        }
+        #create{
+            position: absolute;
+            margin-top: 150px;
+            margin-left: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="create">
+        <form>
+            accountnumber<br><input type="text" name="accountnumber" id="accountnumber" required><br>
+            password<br><input type="password" name="password" id="password" required>
+            <p><input  type="button" value="create account" onclick="create()"></p>
+        </form>
+        <p><a href="login.html"><input id="submit" type="button" value="Have account login now"></a></p>
+    </div>
+
+
+</body>
+
+</html>
